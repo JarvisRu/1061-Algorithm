@@ -5,38 +5,38 @@ using namespace std;
 
 // merge and just compare by value x
 void Merge_x(int left, int midd, int right, int *arr_X, int *arr_Y){
-    cout<<"inn---------"<<endl;
-    // final result
-    int temp[2][right-left+1];
 
+    // final result
+    int new_X[right-left+1];
+    int new_Y[right-left+1];
     // for merge easily
     int i=left,j=midd+1;
     int rear=0;
-    // compare and assign value to temp
+    // compare and assign value to new
     while(i<=midd && j<=right){
         if(arr_X[i] > arr_X[j]){
-            temp[0][rear] = arr_X[j];
-            temp[1][rear] = arr_Y[j];
+            new_X[rear] = arr_X[j];
+            new_Y[rear] = arr_Y[j];
             ++rear;
             ++j;
         }
         else if(arr_X[i] < arr_X[j]){
-            temp[0][rear] = arr_X[i];
-            temp[1][rear] = arr_Y[i];
+            new_X[rear] = arr_X[i];
+            new_Y[rear] = arr_Y[i];
             ++rear;
             ++i;
         }
         // same value of x => compare y
         else{
             if(arr_Y[i] > arr_Y[j]){
-                temp[0][rear] = arr_X[j];
-                temp[1][rear] = arr_Y[j];
+                new_X[rear] = arr_X[j];
+                new_Y[rear] = arr_Y[j];
                 ++rear;
                 ++j;
             }
             else{
-                temp[0][rear] = arr_X[i];
-                temp[1][rear] = arr_Y[i];
+                new_X[rear] = arr_X[i];
+                new_Y[rear] = arr_Y[i];
                 ++rear;
                 ++i;
             }
@@ -44,21 +44,26 @@ void Merge_x(int left, int midd, int right, int *arr_X, int *arr_Y){
     }
     // for remaining value
     while(i<=midd){
-        temp[0][rear] = arr_X[i];
-        temp[1][rear] = arr_Y[i];
+        new_X[rear] = arr_X[i];
+        new_Y[rear] = arr_Y[i];
         ++rear;
         ++i;
     }
     while(j<=right){
-        temp[0][rear] = arr_X[j];
-        temp[1][rear] = arr_Y[j];
+        new_X[rear] = arr_X[j];
+        new_Y[rear] = arr_Y[j];
         ++rear;
         ++j;
     }
 
     for(int i=left ; i<=right ; i++){
-        arr_X[i] = temp[0][i-left];
-        arr_Y[i] = temp[1][i-left];
+        arr_X[i] = new_X[i-left];
+        arr_Y[i] = new_Y[i-left];
+    }
+cout<<"res"<<endl;
+    for(int i=0 ; i<right-left+1 ; i++){
+
+        cout<<arr_X[i]<<" "<<arr_Y[i]<<endl;
     }
 
 }
