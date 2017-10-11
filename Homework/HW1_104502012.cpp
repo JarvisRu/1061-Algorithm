@@ -3,6 +3,9 @@
 using namespace std;
 
 
+int n;
+
+/* For Step 1 */
 // merge and just compare by value x
 void Merge_x(int left, int middle, int right, int *arr_X, int *arr_Y){
 
@@ -73,6 +76,7 @@ void Merge_sort_x(int left, int right, int *arr_X, int *arr_Y){
     }
 }
 
+/* For Step 2 */
 // merge and compare by value y and do ranking calculate
 void Merge_y(int left, int middle, int right, int *arr_X, int *arr_Y, int *x, int *y, int *r){
 
@@ -80,6 +84,7 @@ void Merge_y(int left, int middle, int right, int *arr_X, int *arr_Y, int *x, in
     // for merge easily
     int i=left,j=middle+1;
     int rear=0;
+    cout<<left<<right<<n<<endl;
     // compare and assign value to temp
     while(i<=middle && j<=right){
         if(arr_Y[i] > arr_Y[j]){
@@ -144,7 +149,7 @@ void Merge_sort_y(int left, int right, int *arr_X, int *arr_Y, int *x, int *y, i
 }
 
 int main(){
-    int n;
+
     while(cin>>n){
 
         int x[n],y[n],tmp_x[n],tmp_y[n],used[n],r[n];
