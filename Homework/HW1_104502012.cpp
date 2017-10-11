@@ -7,36 +7,36 @@ using namespace std;
 void Merge_x(int left, int midd, int right, int *arr_X, int *arr_Y){
 
     // final result
-    int new_X[right-left+1];
-    int new_Y[right-left+1];
+    int temp[2][right-left+1];
+
     // for merge easily
     int i=left,j=midd+1;
     int rear=0;
-    // compare and assign value to new
+    // compare and assign value to temp
     while(i<=midd && j<=right){
         if(arr_X[i] > arr_X[j]){
-            new_X[rear] = arr_X[j];
-            new_Y[rear] = arr_Y[j];
+            temp[0][rear] = arr_X[j];
+            temp[1][rear] = arr_Y[j];
             ++rear;
             ++j;
         }
         else if(arr_X[i] < arr_X[j]){
-            new_X[rear] = arr_X[i];
-            new_Y[rear] = arr_Y[i];
+            temp[0][rear] = arr_X[i];
+            temp[1][rear] = arr_Y[i];
             ++rear;
             ++i;
         }
         // same value of x => compare y
         else{
             if(arr_Y[i] > arr_Y[j]){
-                new_X[rear] = arr_X[j];
-                new_Y[rear] = arr_Y[j];
+                temp[0][rear] = arr_X[j];
+                temp[1][rear] = arr_Y[j];
                 ++rear;
                 ++j;
             }
             else{
-                new_X[rear] = arr_X[i];
-                new_Y[rear] = arr_Y[i];
+                temp[0][rear] = arr_X[i];
+                temp[1][rear] = arr_Y[i];
                 ++rear;
                 ++i;
             }
@@ -44,26 +44,21 @@ void Merge_x(int left, int midd, int right, int *arr_X, int *arr_Y){
     }
     // for remaining value
     while(i<=midd){
-        new_X[rear] = arr_X[i];
-        new_Y[rear] = arr_Y[i];
+        temp[0][rear] = arr_X[i];
+        temp[1][rear] = arr_Y[i];
         ++rear;
         ++i;
     }
     while(j<=right){
-        new_X[rear] = arr_X[j];
-        new_Y[rear] = arr_Y[j];
+        temp[0][rear] = arr_X[j];
+        temp[1][rear] = arr_Y[j];
         ++rear;
         ++j;
     }
 
     for(int i=left ; i<=right ; i++){
-        arr_X[i] = new_X[i-left];
-        arr_Y[i] = new_Y[i-left];
-    }
-cout<<"res"<<endl;
-    for(int i=0 ; i<right-left+1 ; i++){
-
-        cout<<arr_X[i]<<" "<<arr_Y[i]<<endl;
+        arr_X[i] = temp[0][i-left];
+        arr_Y[i] = temp[1][i-left];
     }
 
 }
@@ -93,6 +88,8 @@ int main(){
 
         Merge_sort_x(0,n-1,x,y);
 
+        for(int i=0 ; i<n ; i++)
+            cout<<x[i]<<" "<<y[i]<<endl;
 
     }
     return 0;
