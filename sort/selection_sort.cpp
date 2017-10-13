@@ -6,15 +6,16 @@ using namespace std;
 
 int temp;
 
-// trace array and put it to correct site of sorted part ; not correct -> move to right
-void insertion_sort(int *a, int n){
-    for(int i=1 ; i<n ; ++i){
-        int target = a[i];
-        int j;
-        for(j=i ; j>0 && target<a[j-1] ; --j){
-            a[j] = a[j-1]; //move to right
+// find the min in unsorted part and put it to the left as sorted part
+void selection_sort(int *a, int n){
+    for(int i=0 ; i<n ; ++i){
+        int min_index = i;
+        for(int j=i+1 ; j<n ; ++j){
+            if(a[min_index] > a[j]){
+                min_index = j;
+            }
         }
-        a[j] = target;
+        swap(a[i],temp,a[min_index]);
     }
 }
 
@@ -22,13 +23,13 @@ int main(){
     // define an unsorted array
     int a[10] = {1,8,6,5,4,3,2,9,10,7};
 
-    cout<<"< Insertion sort >"<<endl;
+    cout<<"< Selection sort >"<<endl;
     cout<<"Unsorted: ";
     for(int i=0 ; i<10 ; i++){
         cout<<a[i]<<" ";
     }
 
-    insertion_sort(a,10);
+    selection_sort(a,10);
 
     cout<<endl<<"Sorted: ";
     for(int i=0 ; i<10 ; i++){

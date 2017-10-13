@@ -6,6 +6,7 @@ using namespace std;
 
 int temp;
 
+// compare two element and push the biggest to the rightmost
 void bubble_sort(int *a, int n){
     for(int i=0 ; i<n-1 ; ++i){
         for(int j=0 ; j<n-i-1 ; ++j){
