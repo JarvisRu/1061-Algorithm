@@ -24,7 +24,6 @@ void quick_sort(int *a, int left, int right){
 
         quick_sort(a,left,i);
         quick_sort(a,i+1,right);
-
     }
 }
 
