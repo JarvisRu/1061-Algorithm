@@ -4,7 +4,7 @@
 using namespace std;
 
 int n;
-int t; // threshold
+int t;
 
 /*  For Step 1
     merge and just compare by value x */
@@ -163,18 +163,15 @@ void insertion_sort(int left, int right, int *arr_X, int *arr_Y, int *order, int
     for(int i=left+1 ; i<right+1 ; i++){
         int target[3] = {arr_Y[i],arr_X[i],order[i]};
         int j;
-        // cout<<target[0]<<endl;
         for(j=i ; j>left && target[0]<arr_Y[j-1] ; j--){
             arr_Y[j] = arr_Y[j-1];
             arr_X[j] = arr_X[j-1];
             order[j] = order[j-1];
         }
-        // cout<<"j: "<<j<<endl;
         arr_Y[j] = target[0];
         arr_X[j] = target[1];
         order[j] = target[2];
         r[order[j]] += j-left;
-        // cout<<"R["<<order[j]<<"]: "<<r[order[j]]<<endl;
     }
 }
 
@@ -189,7 +186,6 @@ void Merge_sort_y(int left, int right, int *arr_X, int *arr_Y, int *order, int *
         Merge_y(left,middle,right,arr_X,arr_Y,order,r);
     }
     else{
-        // cout<<"IN : "<<left<<" "<<right<<endl;
         insertion_sort(left,right,arr_X,arr_Y,order,r);
     }
 }

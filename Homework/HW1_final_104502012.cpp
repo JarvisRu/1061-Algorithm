@@ -1,7 +1,9 @@
 #include<cstdlib>
 #include<iostream>
-#include<ctime>
 using namespace std;
+
+int n;
+int t = 175; // Optimal threshold
 
 /*  For Step 1
     merge and just compare by value x */
@@ -172,53 +174,48 @@ void insertion_sort(int left, int right, int *arr_X, int *arr_Y, int *order, int
     }
 }
 
-void Merge_sort_y(int left, int right, int *arr_X, int *arr_Y, int *order, int *r, int t){
+void Merge_sort_y(int left, int right, int *arr_X, int *arr_Y, int *order, int *r){
     int middle;
     if(right-left>t){
         middle = (left+right)/2;
         // split the data
-        Merge_sort_y(left,middle,arr_X,arr_Y,order,r,t);
-        Merge_sort_y(middle+1,right,arr_X,arr_Y,order,r,t);
+        Merge_sort_y(left,middle,arr_X,arr_Y,order,r);
+        Merge_sort_y(middle+1,right,arr_X,arr_Y,order,r);
         // do merge
         Merge_y(left,middle,right,arr_X,arr_Y,order,r);
     }
     else{
+        // less than threshold -> do insertion sort
         insertion_sort(left,right,arr_X,arr_Y,order,r);
     }
 }
 
 int main(){
-    srand(time(NULL));
-    double all=0;
-    for(int num=30000 ; num>=25000 ; num-=100){
-        int x[num],y[num],order[num],r[num];
-        double min_T=10.0;
-        int min_t;
-        clock_t start,stop;
-        double duration;
-        // assign random number to point
-        for(int i=0 ; i<num ; i++){
-            x[i] = rand()%100;
-            y[i] = rand()%100;
+
+    while(cin>>n){
+        if(n<=0) break;
+        else if(n<5||n>100000){
+            cout<<"Warning : Value of n should between 5 and 100000"<<endl;
+            continue;
+        }
+        int x[n],y[n],order[n],r[n];
+        for(int i=0 ; i<n ; i++){
+            cin>>x[i]>>y[i];
             r[i] = 0;
             order[i] = i;
         }
 
-        for(int thre = 500 ; thre>=0 ; thre--){
-            start = clock();
-            Merge_sort_x(0,num-1,x,y,order);
-            Merge_sort_y(0,num-1,x,y,order,r,thre);
-            stop = clock();
+        /* Step1: sort by value x */
+        Merge_sort_x(0,n-1,x,y,order);
 
-            duration = (double)(stop-start)/CLOCKS_PER_SEC;
-            if(duration < min_T){
-                min_T = duration;
-                min_t = thre;
-            }
-        }
-        cout<<"While input "<<num<<" point, threshold is "<<min_t<<", and Time is: "<<min_T<<endl;
-        all += min_t;
+        /* Step2: sort by value y and do rank calculate*/
+        Merge_sort_y(0,n-1,x,y,order,r);
+
+        cout<<"Rank: ";
+        for(int i=0 ; i<n ; i++)
+            cout<<r[i]<<" ";
+        cout<<endl<<"======================="<<endl;
+
     }
-    cout<<"Average threshold :"<<all/50;
     return 0;
 }
