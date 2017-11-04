@@ -143,7 +143,7 @@ void Merge_y(int left, int middle, int right, int *arr_X, int *arr_Y, int *order
     while(j<=right){
         temp[0][rear] = arr_X[j];
         temp[1][rear] = arr_Y[j];
-        temp[2][rear] = order[i];
+        temp[2][rear] = order[j];
         r[order[j]] += i-left;
 
         ++rear;
