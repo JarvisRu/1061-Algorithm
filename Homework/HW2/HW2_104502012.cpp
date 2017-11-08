@@ -4,10 +4,11 @@
 #include<algorithm>
 using namespace std;
 
-int* getScore(const string &, const string &, int, int);
+int* getScore( string &, string &, int, int);
 string lcs(const string &, const string &);
 
-string re_x,re_y;
+string re_x,re_y;   // store revised string x,y
+int *now;           // store returned score to prevent cost additional memory
 
 int main(){
     int t;
@@ -25,10 +26,12 @@ int main(){
 
         cout<<lcs(x,y)<<endl;
     }
+    delete [] now;
+
     return 0;
 }
 
-string lcs(const string &x, const string &y){
+string lcs(const string &x,const string &y){
     int m,n;
     m = x.length();
     n = y.length();
@@ -39,26 +42,25 @@ string lcs(const string &x, const string &y){
     if(m==0 || n==0)
         return "";
     else if(m==1 || n==1){
-        if(m==1 && y.find(x[0])!=string::npos){
+        if(m==1 && y.find(x[0])!=string::npos)
             return res+=x[0];
-        }
-        else if(n==1 && x.find(y[0])!=string::npos){
+        else if(n==1 && x.find(y[0])!=string::npos)
             return res+=y[0];
-        }
         else return "";
     }
     else{
         int max_sum = -1;
         int k;
 
-        score_l = getScore(x.substr(0,m/2), y, m/2, n);
+        re_x = x.substr(0,m/2);
+        re_y = y;
+        score_l = getScore(re_x, re_y, m/2, n);
 
         re_x = x.substr(m/2,m-m/2);
         re_y = y;
         reverse(re_x.begin(),re_x.end());
         reverse(re_y.begin(),re_y.end());
         score_r = getScore(re_x, re_y, m-m/2, n);
-
 
         // find max as k
         for(int i=0 ; i<=n ; ++i){
@@ -76,10 +78,10 @@ string lcs(const string &x, const string &y){
     }
 }
 
-int* getScore(const string &a,const string &b, int m, int n){
+int* getScore(string &a, string &b, int m, int n){
 
     int *prev = new int[n+1];
-    int *now = new int[n+1];
+    now = new int[n+1];
 
     for(int i=0 ; i<m+1 ; ++i){
         for(int j=0 ; j<n+1 ; ++j){
