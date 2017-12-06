@@ -33,23 +33,14 @@ int main(){
         int total_time = 0;
 
         for(int i=0 ; i<n ; ++i){
-            cout<<endl;
             // push job into heap order by time
-            insert_heap(jobs[i],heap,nowNum);
-            cout<<"now1:"<<nowNum<<endl;
+            insert_heap(jobs[i], heap, nowNum);
             total_time += jobs[i].time;
             if(total_time > jobs[i].deadline){
-                removed_job = pop(heap,nowNum);
-                cout<<"now2:"<<nowNum<<endl;
-                cout<<"removed:"<<removed_job.time<<endl;
+                removed_job = pop(heap, nowNum);
                 total_time -= removed_job.time;
             }
-            cout<<"total:"<<total_time<<endl;
-            cout<<"now3:"<<nowNum<<endl;
         }
-        //for(int i=1 ; i<=nowNum ; ++i){
-            //cout<<heap[i].time<<" ";
-        //}
 
         ans.push_back(nowNum);
         --k;
@@ -113,6 +104,7 @@ void Merge(int left, int middle, int right, job *jobs){
 
 void insert_heap(job j, job *heap, int &now){
     heap[++now] = j;
+    int nowSize = now;
     // up heap
     job item = heap[now];
     heap[0].time = INT_MAX;
@@ -121,6 +113,7 @@ void insert_heap(job j, job *heap, int &now){
         now /= 2;
     }
     heap[now] = item;
+    now = nowSize;
 }
 
 job pop(job *heap, int &now){
